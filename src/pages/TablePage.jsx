@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import ResultsList from "../components/ResultsList";
+import Navbar from "../components/Navbar";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -104,10 +105,10 @@ const TablePage = () => {
   return (
     <div
       className={`min-h-screen p-2 ${
-        isDarkMode ? "bg-gray-900" : "bg-gray-300"
+        isDarkMode ? "bg-gray-900" : "bg-gray-200"
       }`}
     >
-      <Header toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
+      <Navbar />
       <main className="mt-24 flex flex-col md:flex-row justify-center">
         <div className={`md:w-3/4 w-full max-w-4xl mx-auto`}>
           <div

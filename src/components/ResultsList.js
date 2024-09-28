@@ -106,7 +106,7 @@ const ResultsList = ({ results, onUpdate, onDelete, isDarkMode, onAdd }) => {
       )}
 
       <table
-        className={`min-w-full table-auto ${
+        className={`min-w-full table-auto rounded-lg ${
           isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
         }`}
       >

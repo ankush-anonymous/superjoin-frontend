@@ -77,12 +77,11 @@ const TablePage = () => {
   // Handle adding a new result to the table
   const handleAddResult = async (newResult) => {
     try {
-      const { ItemID, ItemName, Stock, Price } = newResult;
+      const { ItemName, Stock, Price } = newResult;
 
       const response = await axios.post(
         "https://superjoin-backend-1.onrender.com/data/add", // API for adding data
         {
-          item_id: ItemID, // Send data in required format
           item_name: ItemName,
           stock: Stock,
           price: Price,

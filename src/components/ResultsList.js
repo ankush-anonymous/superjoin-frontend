@@ -5,11 +5,10 @@ const ResultsList = ({ results, onUpdate, onDelete, isDarkMode, onAdd }) => {
   const [editableData, setEditableData] = useState(null); // Editable data for the row
   const [isAdding, setIsAdding] = useState(false); // Track whether we are adding a new entry
   const [newData, setNewData] = useState({
-    ItemID: "",
     ItemName: "",
     Stock: "",
     Price: "",
-  }); // New entry form data
+  }); // New entry form data, removed ItemID
 
   const handleEdit = (index) => {
     setEditIndex(index);
@@ -39,7 +38,6 @@ const ResultsList = ({ results, onUpdate, onDelete, isDarkMode, onAdd }) => {
   const handleAddSave = () => {
     onAdd(newData); // Call parent function to add new entry
     setNewData({
-      ItemID: "",
       ItemName: "",
       Stock: "",
       Price: "",
@@ -63,12 +61,6 @@ const ResultsList = ({ results, onUpdate, onDelete, isDarkMode, onAdd }) => {
           }`}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              placeholder="ItemID"
-              value={newData.ItemID}
-              onChange={(e) => handleNewFieldChange(e, "ItemID")}
-              className="px-2 py-1 rounded bg-gray-200"
-            />
             <input
               placeholder="ItemName"
               value={newData.ItemName}
@@ -116,8 +108,7 @@ const ResultsList = ({ results, onUpdate, onDelete, isDarkMode, onAdd }) => {
             <th className="px-4 py-2 border">ItemName</th>
             <th className="px-4 py-2 border">Stock</th>
             <th className="px-4 py-2 border">Price</th>
-            <th className="px-4 py-2 border">Actions</th>{" "}
-            {/* Add Actions header */}
+            <th className="px-4 py-2 border">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -135,6 +126,7 @@ const ResultsList = ({ results, onUpdate, onDelete, isDarkMode, onAdd }) => {
                       value={editableData.ItemID}
                       onChange={(e) => handleFieldChange(e, "ItemID")}
                       className="w-full px-2 py-1 rounded bg-gray-200"
+                      disabled // Keep the ItemID disabled since it’s auto-generated
                     />
                   </td>
                   <td className="px-4 py-2 border">

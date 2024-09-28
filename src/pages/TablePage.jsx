@@ -5,32 +5,33 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const TablePage = () => {
   const [results, setResults] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false); // State for dark mode
 
   // Fetch data from backend when the component mounts
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://superjoin-backend-1.onrender.com/data/fetch"
-        );
-        const data = await response.json();
-        console.log(data);
-        // Map the API data to match the table's column names
-        const mappedData = data.map((item) => ({
-          ItemID: item.item_id,
-          ItemName: item.item_name,
-          Stock: item.stock,
-          Price: item.price,
-        }));
-        setResults(mappedData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://superjoin-backend-1.onrender.com/data/fetch"
+      );
+      const data = await response.json();
+      console.log(data);
+      // Map the API data to match the table's column names
+      const mappedData = data.map((item) => ({
+        ItemID: item.item_id,
+        ItemName: item.item_name,
+        Stock: item.stock,
+        Price: item.price,
+      }));
+      setResults(mappedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -46,11 +47,8 @@ const TablePage = () => {
       })
       .then((response) => {
         console.log(response.data);
-        // Update the state with the new results after successful update
-        const updatedResults = results.map((item, i) =>
-          i === index ? updatedResult : item
-        );
-        setResults(updatedResults);
+        // Re-fetch data after successful update
+        fetchData();
         toast.success("Data updated successfully!");
       })
       .catch((error) => {
@@ -60,13 +58,12 @@ const TablePage = () => {
   };
 
   // Handle delete when user deletes a row in the table
-  const handleDeleteResult = (index, itemId) => {
+  const handleDeleteResult = (itemId) => {
     axios
       .delete(`https://superjoin-backend-1.onrender.com/data/delete/${itemId}`)
       .then((response) => {
-        // If the delete is successful, update the state
-        const updatedResults = results.filter((_, i) => i !== index);
-        setResults(updatedResults);
+        // Re-fetch data after successful deletion
+        fetchData();
         toast.success("Data deleted successfully!");
       })
       .catch((error) => {
@@ -79,7 +76,7 @@ const TablePage = () => {
     try {
       const { ItemName, Stock, Price } = newResult;
 
-      const response = await axios.post(
+      await axios.post(
         "https://superjoin-backend-1.onrender.com/data/add", // API for adding data
         {
           item_name: ItemName,
@@ -88,8 +85,8 @@ const TablePage = () => {
         }
       );
 
-      // After successful API call, update the results state
-      setResults([...results, newResult]);
+      // Re-fetch data after successful addition
+      fetchData();
       toast.success("Data added successfully!");
     } catch (error) {
       console.error("Error adding data:", error);

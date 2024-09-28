@@ -182,7 +182,7 @@ const ResultsList = ({ results, onUpdate, onDelete, isDarkMode, onAdd }) => {
                     </button>
                     <button
                       className="bg-red-500 text-white px-2 py-1 md:px-4 md:py-2 rounded mb-2 md:mb-0 m-1"
-                      onClick={() => onDelete(index, result.ItemID)} // Pass the index and ItemID
+                      onClick={() => onDelete(result.ItemID)} // Pass only ItemID here
                     >
                       Delete
                     </button>
